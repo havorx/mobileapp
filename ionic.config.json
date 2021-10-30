@@ -1,0 +1,7 @@
+{
+  "name": "myforthapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
