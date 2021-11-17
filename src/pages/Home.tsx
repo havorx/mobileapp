@@ -14,6 +14,7 @@ const Home: React.FC = () => {
   async function fetchData() {
     const allRecords = await getAllRecords();
     setRecords(allRecords);
+    console.log(allRecords);
   }
 
   async function searchProperty(searchText: string) {

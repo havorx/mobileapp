@@ -1,12 +1,12 @@
 import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonItem, IonLabel, IonSelectOption, IonSelect, IonDatetime,
-  IonInput, IonButton, useIonToast, IonBackButton, IonIcon
+  IonInput, IonButton, useIonToast, IonBackButton, IonIcon, useIonAlert
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { trashSharp } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router';
-import { getRecordById, deleteRecord, updateRecord } from '../databaseHandler';
+import { getRecordById, deleteRecord, updateRecord, getAllRecords } from '../databaseHandler';
 import { Record } from '../models';
 
 interface CWParams {
@@ -24,8 +24,10 @@ const Details: React.FC = () => {
   const [reporter, setReporter] = useState('')
   const [present] = useIonToast()
   const history = useHistory()
+  const [alert] = useIonAlert();
 
-  const handleUpdate = () => {
+
+  const handleUpdate = async () => {
     const newEntry = {
       id: Number.parseInt(id),
       property: property,
@@ -36,13 +38,22 @@ const Details: React.FC = () => {
       note: note,
       reporter: reporter
     }
+    const allRecords = await getAllRecords();
+    const duplicate = allRecords.filter(record =>
+      newEntry.property === record.property &&
+      newEntry.bedroom === record.bedroom &&
+      newEntry.date === record.date &&
+      newEntry.price === record.price &&
+      newEntry.reporter === record.reporter);
 
     if (!property || !bedroom || !date || !price || !reporter) {
       present("Please enter in the required field", 2000);
-    } else {
+    } 
+    
+    else if (duplicate.length === 0) {
       updateRecord(newEntry);
       present("Updated", 2000);
-    }
+    } else present("Property already exist", 2000);
   }
 
   async function fetchData() {
@@ -61,14 +72,22 @@ const Details: React.FC = () => {
   }, [])
 
   function handleDelete() {
-    const userConfirm = window.confirm("Are you sure you want to delete?");
-    if (userConfirm) {
-      deleteRecord(Number.parseInt(id))
-      alert("detele successfully")
-      history.goBack();
-    } else {
-      alert("your action has been cancelled")
-    }
+    alert({
+      header: 'Delete this property?',
+      message: 'Are you sure?',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Ok',
+          handler: () => {
+            deleteRecord(Number.parseInt(id))
+            present("Property deleted", 2000)
+            history.goBack()
+          }
+        },
+      ],
+      onDidDismiss: () => false,
+    })
   }
 
   return (
@@ -78,7 +97,7 @@ const Details: React.FC = () => {
           <IonButton slot="start">
             <IonBackButton />
           </IonButton>
-          <IonTitle>Details {id}</IonTitle>
+          <IonTitle>Property {id}</IonTitle>
           <IonButton onClick={handleDelete} color="danger" slot="end">
             <IonIcon icon={trashSharp}></IonIcon>
           </IonButton>
