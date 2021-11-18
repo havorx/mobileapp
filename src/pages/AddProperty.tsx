@@ -1,7 +1,7 @@
 import {
     IonButton, IonContent, IonDatetime, IonHeader,
-    IonInput, IonItem, IonLabel, IonPage, IonRefresher, IonRefresherContent, IonSelect,
-    IonSelectOption, IonTitle, IonToolbar,
+    IonInput, IonItem, IonLabel, IonPage, IonRefresher,
+    IonRefresherContent, IonSelect, IonSelectOption, IonTitle, IonToolbar,
     useIonToast
 } from '@ionic/react';
 import {useEffect, useState} from 'react';
@@ -17,8 +17,7 @@ const AddProperty: React.FC = () => {
     const [reporter, setReporter] = useState('')
     const [present] = useIonToast()
 
-    const submitCLick = async () => {
-
+    async function submitCLick() {
         const newEntry = {
             property: property,
             bedroom: bedroom,
@@ -27,31 +26,31 @@ const AddProperty: React.FC = () => {
             furniture: furniture,
             note: note,
             reporter: reporter
-        };
-        const allProperties = await getAllProperty();
+        }
+        const allProperties = await getAllProperty()
 
         const duplicate = allProperties.filter(element =>
             newEntry.property === element.property &&
             newEntry.bedroom === element.bedroom &&
             newEntry.date === element.date &&
             newEntry.price === element.price &&
-            newEntry.reporter === element.reporter);
+            newEntry.reporter === element.reporter)
 
         if (!property || !bedroom || !date || !price || !reporter) {
-            present('Please enter in the (*) required field', 2000);
+            present('Please enter in the (*) required field', 2000)
         } else if (duplicate.length === 0) {
             await insertProperty(newEntry);
             present('Property submitted', 2000);
-        } else present('Property already exist', 2000);
+        } else present('Property already exist', 2000)
     }
 
     function resetState() {
-        setProperty('');
-        setBedroom('');
-        setPrice('');
-        setFurniture('');
-        setNotes('');
-        setReporter('');
+        setProperty('')
+        setBedroom('')
+        setPrice('')
+        setFurniture('')
+        setNotes('')
+        setReporter('')
     }
 
     function doRefresh(event: any) {

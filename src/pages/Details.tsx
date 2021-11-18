@@ -27,7 +27,7 @@ const Details: React.FC = () => {
     const [alert] = useIonAlert();
 
 
-    const handleUpdate = async () => {
+    async function handleUpdate() {
         const newEntry = {
             id: Number.parseInt(id),
             property: property,
@@ -77,8 +77,8 @@ const Details: React.FC = () => {
                 'Cancel',
                 {
                     text: 'Ok',
-                    handler: () => {
-                        deleteProperty(Number.parseInt(id))
+                    handler: async () => {
+                        await deleteProperty(Number.parseInt(id))
                         present('Property deleted', 2000)
                         history.goBack()
                     }
