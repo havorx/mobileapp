@@ -49,7 +49,7 @@ const App: React.FC = () => (
                         Home</IonTabButton>
                     <IonTabButton tab="add-property" href="/add-property">
                         <IonIcon icon={addCircleOutline}/>
-                        Register</IonTabButton>
+                        Add Property</IonTabButton>
                 </IonTabBar>
             </IonTabs>
         </IonReactRouter>

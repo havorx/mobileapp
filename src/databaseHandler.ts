@@ -56,7 +56,6 @@ export async function updateProperty(newProperty: Property) {
     const ent = await db.transaction('property').objectStore('property').get(newProperty.id!) as Property
     ent.property = newProperty.property
     ent.bedroom = newProperty.bedroom
-    ent.date = newProperty.date
     ent.price = newProperty.price
     ent.furniture = newProperty.furniture
     ent.note = newProperty.note

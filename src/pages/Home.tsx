@@ -26,11 +26,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         fetchData()
-    }, [])
-
-
-    useEffect(() => {
-        searchProperty(searchText);
+        searchProperty(searchText)
     }, [searchText])
 
     function doRefresh(event: any) {

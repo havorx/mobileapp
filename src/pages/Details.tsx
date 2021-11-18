@@ -4,7 +4,7 @@ import {
     IonInput, IonButton, useIonToast, IonBackButton, IonIcon, useIonAlert
 } from '@ionic/react';
 import {useEffect, useState} from 'react';
-import {trashSharp} from 'ionicons/icons';
+import {trashBinOutline} from 'ionicons/icons';
 import {useHistory, useParams} from 'react-router';
 import {getPropertyById, deleteProperty, updateProperty, getAllProperty} from '../databaseHandler';
 import {Property} from '../models';
@@ -17,7 +17,7 @@ const Details: React.FC = () => {
     const {id} = useParams<CWParams>()
     const [property, setProperty] = useState('')
     const [bedroom, setBedroom] = useState('')
-    const [date, setDate] = useState(new Date().toISOString())
+    const [date, setDate] = useState('')
     const [price, setPrice] = useState('')
     const [furniture, setFurniture] = useState('')
     const [note, setNotes] = useState('')
@@ -47,11 +47,11 @@ const Details: React.FC = () => {
             newEntry.reporter === element.reporter);
 
         if (!property || !bedroom || !date || !price || !reporter) {
-            present("Please enter in the required field", 2000);
+            present('Please enter in the required field', 2000);
         } else if (duplicate.length === 0) {
             updateProperty(newEntry);
-            present("Updated", 2000);
-        } else present("Property already exist", 2000);
+            present('Property updated', 2000);
+        } else present('Property already exist', 2000);
     }
 
     async function fetchData() {
@@ -79,12 +79,11 @@ const Details: React.FC = () => {
                     text: 'Ok',
                     handler: () => {
                         deleteProperty(Number.parseInt(id))
-                        present("Property deleted", 2000)
+                        present('Property deleted', 2000)
                         history.goBack()
                     }
                 },
             ],
-            onDidDismiss: () => false,
         })
     }
 
@@ -97,7 +96,7 @@ const Details: React.FC = () => {
                     </IonButton>
                     <IonTitle>Property {id}</IonTitle>
                     <IonButton onClick={handleDelete} color="danger" slot="end">
-                        <IonIcon icon={trashSharp}></IonIcon>
+                        <IonIcon icon={trashBinOutline}/>
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
@@ -120,11 +119,11 @@ const Details: React.FC = () => {
                 </IonItem>
                 <IonItem>
                     <IonLabel position="stacked">Date</IonLabel>
-                    <IonDatetime value={date} onIonChange={event => setDate(event.detail.value!)}></IonDatetime>
+                    <IonDatetime readonly={true} value={date}/>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="stacked">Monthly Rent Price</IonLabel>
-                    <IonInput value={price} onIonChange={event => setPrice(event.detail.value!)}></IonInput>
+                    <IonInput value={price} onIonChange={event => setPrice(event.detail.value!)}/>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="stacked">Furniture types</IonLabel>
@@ -136,11 +135,11 @@ const Details: React.FC = () => {
                 </IonItem>
                 <IonItem>
                     <IonLabel position="stacked">Notes</IonLabel>
-                    <IonInput value={note} onIonChange={event => setNotes(event.detail.value!)}></IonInput>
+                    <IonInput value={note} onIonChange={event => setNotes(event.detail.value!)}/>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="stacked">Reporter Name</IonLabel>
-                    <IonInput value={reporter} onIonChange={event => setReporter(event.detail.value!)}></IonInput>
+                    <IonInput value={reporter} onIonChange={event => setReporter(event.detail.value!)}/>
                 </IonItem>
                 <IonButton expand="block" onClick={handleUpdate}>Update</IonButton>
             </IonContent>
