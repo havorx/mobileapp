@@ -4,25 +4,24 @@ import {
     IonSearchbar
 } from '@ionic/react';
 import {useEffect, useState} from 'react';
-import {getAllRecords} from '../databaseHandler';
-import {Record} from '../models';
-import ReactAudioPlayer from 'react-audio-player';
+import {getAllProperty} from '../databaseHandler';
+import {Property} from '../models';
 
 const Home: React.FC = () => {
-    const [records, setRecords] = useState<any[]>([]);
+    const [property, setProperty] = useState<any[]>([]);
     const [searchText, setText] = useState('');
 
     async function fetchData() {
-        const allRecords = await getAllRecords();
-        setRecords(allRecords);
-        console.log(allRecords);
+        const allProperties = await getAllProperty();
+        setProperty(allProperties);
+        console.log(allProperties);
     }
 
     async function searchProperty(searchText: string) {
-        const allRecords = await getAllRecords() as Record[];
+        const allProperties = await getAllProperty() as Property[];
         searchText = searchText.toLowerCase();
-        const filteredResults = allRecords.filter(record => record.property.toLowerCase().indexOf(searchText) > -1);
-        setRecords(filteredResults);
+        const filteredResults = allProperties.filter(element => element.property.toLowerCase().indexOf(searchText) > -1);
+        setProperty(filteredResults);
     }
 
     useEffect(() => {
@@ -50,14 +49,14 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonSearchbar value={searchText} onIonChange={e => setText(e.detail.value!)}></IonSearchbar>
+                <IonSearchbar value={searchText} onIonChange={e => setText(e.detail.value!)}/>
                 <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-                    <IonRefresherContent></IonRefresherContent>
+                    <IonRefresherContent/>
                 </IonRefresher>
-                {records &&
+                {property &&
                 <IonList>
                     {
-                        records.map((c, i) =>
+                        property.map((c, i) =>
                             <IonItem routerLink={'details/' + c.id} button key={i}>{c.property}</IonItem>
                         )
                     }

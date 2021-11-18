@@ -1,4 +1,4 @@
-export interface Record{
+export interface Property {
     id? : number,
     property: string,
     bedroom: string,

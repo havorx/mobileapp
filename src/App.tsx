@@ -1,8 +1,10 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonIcon, IonRouterOutlet, IonTab, IonTabBar, IonTabButton, IonTabs, IonTabsContext } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import {Redirect, Route} from 'react-router-dom';
+import {IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
+import {IonReactRouter} from '@ionic/react-router';
 import Home from './pages/Home';
-import {home as homeIcon,personAdd as personAddIcon} from 'ionicons/icons'
+import AddProperty from './pages/AddProperty';
+import Details from './pages/Details';
+import {addCircleOutline, home} from 'ionicons/icons'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,38 +24,36 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Register from './pages/Register';
-import Details from './pages/Details';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route exact path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/details/:id">
-              <Details/>
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-            <IonTabButton tab="home" href="/home">
-              <IonIcon icon={homeIcon}/>
-              Home</IonTabButton>
-            <IonTabButton tab="register" href="/register">
-              <IonIcon icon={personAddIcon}/>
-              Register</IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+    <IonApp>
+        <IonReactRouter>
+            <IonTabs>
+                <IonRouterOutlet>
+                    <Route exact path="/home">
+                        <Home/>
+                    </Route>
+                    <Route exact path="/">
+                        <Redirect to="/home"/>
+                    </Route>
+                    <Route exact path="/add-property">
+                        <AddProperty/>
+                    </Route>
+                    <Route exact path="/details/:id">
+                        <Details/>
+                    </Route>
+                </IonRouterOutlet>
+                <IonTabBar slot="bottom">
+                    <IonTabButton tab="home" href="/home">
+                        <IonIcon icon={home}/>
+                        Home</IonTabButton>
+                    <IonTabButton tab="add-property" href="/add-property">
+                        <IonIcon icon={addCircleOutline}/>
+                        Register</IonTabButton>
+                </IonTabBar>
+            </IonTabs>
+        </IonReactRouter>
+    </IonApp>
+)
 
 export default App;
