@@ -53,12 +53,12 @@ export async function deleteProperty(id: number) {
 
 export async function updateProperty(newProperty: Property) {
     const db = await openDB(DATABASE_NAME, 1);
-    const ent = await db.transaction('property').objectStore('property').get(newProperty.id!) as Property
-    ent.property = newProperty.property
-    ent.bedroom = newProperty.bedroom
-    ent.price = newProperty.price
-    ent.furniture = newProperty.furniture
-    ent.note = newProperty.note
-    ent.reporter = newProperty.reporter
-    await db.put('property', ent);
+    const oldProperty = await db.transaction('property').objectStore('property').get(newProperty.id!) as Property
+    oldProperty.property = newProperty.property
+    oldProperty.bedroom = newProperty.bedroom
+    oldProperty.price = newProperty.price
+    oldProperty.furniture = newProperty.furniture
+    oldProperty.note = newProperty.note
+    oldProperty.reporter = newProperty.reporter
+    await db.put('property', oldProperty);
 }

@@ -9,12 +9,12 @@ import {useHistory, useParams} from 'react-router';
 import {getPropertyById, deleteProperty, updateProperty, getAllProperty} from '../databaseHandler';
 import {Property} from '../models';
 
-interface CWParams {
+interface propertyParam {
     id: string
 }
 
 const Details: React.FC = () => {
-    const {id} = useParams<CWParams>()
+    const {id} = useParams<propertyParam>()
     const [property, setProperty] = useState('')
     const [bedroom, setBedroom] = useState('')
     const [date, setDate] = useState('')
