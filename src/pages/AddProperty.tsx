@@ -69,7 +69,7 @@ const AddProperty: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>CourseWork</IonTitle>
+                    <IonTitle>RentalZ</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
